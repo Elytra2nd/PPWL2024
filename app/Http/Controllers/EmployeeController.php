@@ -1,5 +1,5 @@
-<?php
 
+<?php
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
@@ -15,8 +15,7 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = Employee::latest()->paginate(5);
-        return view('employees.index', compact('employees'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('employees.index', compact('employees'));
     }
 
     /**
