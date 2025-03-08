@@ -1,4 +1,5 @@
-<?php
+
+<?
 
 namespace App\Http\Controllers;
 
@@ -42,11 +43,11 @@ class EmployeeController extends Controller
             'position' => 'required',
             'salary' => 'required|numeric',
         ]);
-
+    
         Employee::create($request->all());
-
+     
         return redirect()->route('employees.index')
-            ->with('success', 'Employee created successfully.');
+                        ->with('success','Employee created successfully.');
     }
 
     /**
@@ -57,7 +58,7 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        return view('employees.show', compact('employee'));
+        return view('employees.show',compact('employee'));
     }
 
     /**
@@ -68,7 +69,7 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        return view('employees.edit', compact('employee'));
+        return view('employees.edit',compact('employee'));
     }
 
     /**
@@ -85,11 +86,11 @@ class EmployeeController extends Controller
             'position' => 'required',
             'salary' => 'required|numeric',
         ]);
-
+    
         $employee->update($request->all());
-
+    
         return redirect()->route('employees.index')
-            ->with('success', 'Employee updated successfully');
+                        ->with('success','Employee updated successfully');
     }
 
     /**
@@ -101,8 +102,8 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         $employee->delete();
-
+    
         return redirect()->route('employees.index')
-            ->with('success', 'Employee deleted successfully');
+                        ->with('success','Employee deleted successfully');
     }
 }
