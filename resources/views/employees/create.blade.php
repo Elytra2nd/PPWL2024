@@ -1,40 +1,55 @@
 
 @extends('employees.layout')
-
+  
 @section('content')
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h4>Add New Employee</h4>
+<div class="row mt-5">
+    <div class="col-lg-12 margin-tb">
+        <div class="float-start">
+            <h2>Add New Employee</h2>
         </div>
-        <div class="card-body">
-            <form action="{{ route('employees.store') }}" method="POST">
-                @csrf
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required>
-                    @error('name')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label for="position" class="form-label">Position</label>
-                    <input type="text" class="form-control @error('position') is-invalid @enderror" id="position" name="position" value="{{ old('position') }}" required>
-                    @error('position')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label for="salary" class="form-label">Salary</label>
-                    <input type="number" step="0.01" class="form-control @error('salary') is-invalid @enderror" id="salary" name="salary" value="{{ old('salary') }}" required>
-                    @error('salary')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="d-flex justify-content-between">
-                    <a href="{{ route('employees.index') }}" class="btn btn-secondary">Back</a>
-                    <button type="submit" class="btn btn-success">Submit</button>
-                </div>
-            </form>
+        <div class="float-end">
+            <a class="btn btn-primary" href="{{ route('employees.index') }}"> Back</a>
         </div>
     </div>
+</div>
+   
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+   
+<form action="{{ route('employees.store') }}" method="POST" class="mt-3">
+    @csrf
+  
+     <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+            <div class="form-group">
+                <strong>Name:</strong>
+                <input type="text" name="name" class="form-control" placeholder="Name">
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+            <div class="form-group">
+                <strong>Position:</strong>
+                <input type="text" name="position" class="form-control" placeholder="Position">
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+            <div class="form-group">
+                <strong>Salary:</strong>
+                <input type="number" step="0.01" name="salary" class="form-control" placeholder="Salary">
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+   
+</form>
 @endsection
