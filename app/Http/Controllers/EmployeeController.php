@@ -40,7 +40,7 @@ class EmployeeController extends Controller
         $request->validate([
             'name' => 'required',
             'position' => 'required',
-            'salary' => 'required',
+            'salary' => 'required|numeric',
         ]);
     
         Employee::create($request->all());
@@ -83,7 +83,7 @@ class EmployeeController extends Controller
         $request->validate([
             'name' => 'required',
             'position' => 'required',
-            'salary' => 'required',
+            'salary' => 'required|numeric',
         ]);
     
         $employee->update($request->all());
