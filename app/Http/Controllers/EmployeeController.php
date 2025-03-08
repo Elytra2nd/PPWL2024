@@ -15,8 +15,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::all();
-        return view('employees.index', compact('employees'));
+        $employees = Employee::latest()->paginate(5);
+        return view('employees.index', compact('employees'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -37,13 +38,13 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'position' => 'required|string|max:255',
-            'salary' => 'required|numeric|min:0',
+        $request->validate([
+            'name' => 'required',
+            'position' => 'required',
+            'salary' => 'required|numeric',
         ]);
 
-        Employee::create($validated);
+        Employee::create($request->all());
 
         return redirect()->route('employees.index')
             ->with('success', 'Employee created successfully.');
@@ -80,16 +81,16 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'position' => 'required|string|max:255',
-            'salary' => 'required|numeric|min:0',
+        $request->validate([
+            'name' => 'required',
+            'position' => 'required',
+            'salary' => 'required|numeric',
         ]);
 
-        $employee->update($validated);
+        $employee->update($request->all());
 
         return redirect()->route('employees.index')
-            ->with('success', 'Employee updated successfully.');
+            ->with('success', 'Employee updated successfully');
     }
 
     /**
@@ -103,6 +104,6 @@ class EmployeeController extends Controller
         $employee->delete();
 
         return redirect()->route('employees.index')
-            ->with('success', 'Employee deleted successfully.');
+            ->with('success', 'Employee deleted successfully');
     }
 }
