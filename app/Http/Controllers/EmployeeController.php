@@ -15,7 +15,8 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = Employee::latest()->paginate(5);
-        return view('employees.index', compact('employees'));
+        return view('employees.index', compact('employees'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -39,13 +40,13 @@ class EmployeeController extends Controller
         $request->validate([
             'name' => 'required',
             'position' => 'required',
-            'salary' => 'required|numeric',
+            'salary' => 'required',
         ]);
-
+    
         Employee::create($request->all());
-
+     
         return redirect()->route('employees.index')
-            ->with('success', 'Employee created successfully.');
+                        ->with('success','Employee created successfully.');
     }
 
     /**
@@ -56,7 +57,7 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        return view('employees.show', compact('employee'));
+        return view('employees.show',compact('employee'));
     }
 
     /**
@@ -67,7 +68,7 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        return view('employees.edit', compact('employee'));
+        return view('employees.edit',compact('employee'));
     }
 
     /**
@@ -82,13 +83,13 @@ class EmployeeController extends Controller
         $request->validate([
             'name' => 'required',
             'position' => 'required',
-            'salary' => 'required|numeric',
+            'salary' => 'required',
         ]);
-
+    
         $employee->update($request->all());
-
+    
         return redirect()->route('employees.index')
-            ->with('success', 'Employee updated successfully');
+                        ->with('success','Employee updated successfully');
     }
 
     /**
@@ -100,8 +101,8 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         $employee->delete();
-
+    
         return redirect()->route('employees.index')
-            ->with('success', 'Employee deleted successfully');
+                        ->with('success','Employee deleted successfully');
     }
 }
